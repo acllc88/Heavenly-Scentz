@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Heavenly Scentz – Soy Candles & Thingz</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --blush:    #C49A9A;
+      --sage:     #7B8C7A;
+      --gold:     #D4AF37;
+      --dark:     #4A4036;
+      --cream:    #FDFBF7;
+      --lightblush: #f5eaea;
+      --lightsage:  #eef2ee;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background: var(--cream);
+      color: var(--dark);
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 48px;
+      background: rgba(253,251,247,0.88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(196,154,154,0.18);
+    }
+    .nav-logo svg { height: 44px; }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      text-decoration: none; font-size: 11px; font-weight: 700;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: var(--dark); opacity: .65; transition: opacity .2s, color .2s;
+    }
+    .nav-links a:hover { opacity: 1; color: var(--blush); }
+    .nav-cta {
+      background: var(--dark); color: var(--cream);
+      border: none; padding: 10px 26px; border-radius: 50px; cursor: pointer;
+      font-family: 'Quicksand', sans-serif; font-size: 11px; font-weight: 700;
+      letter-spacing: 2.5px; text-transform: uppercase;
+      transition: background .25s, transform .2s;
+    }
+    .nav-cta:hover { background: var(--blush); transform: translateY(-1px); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr;
+      align-items: center; padding: 120px 80px 80px; position: relative; overflow: hidden;
+    }
+    .hero::after {
+      content: ''; position: absolute; right: -100px; top: -100px;
+      width: 580px; height: 580px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(196,154,154,0.2) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-left { position: relative; z-index: 2; }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 10px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase;
+      color: var(--sage); margin-bottom: 28px;
+      opacity: 0; animation: fadeUp .7s .2s forwards;
+    }
+    .hero-tag::before { content: ''; width: 32px; height: 1px; background: var(--sage); }
+    .hero-h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(52px, 6vw, 88px); font-weight: 300; line-height: 1.08;
+      margin-bottom: 28px; opacity: 0; animation: fadeUp .8s .35s forwards;
+    }
+    .hero-h1 em { font-style: italic; color: var(--blush); }
+    .hero-sub {
+      font-size: 15px; font-weight: 500; line-height: 1.75; opacity: 0;
+      color: var(--dark); max-width: 440px; margin-bottom: 44px;
+      animation: fadeUp .8s .5s forwards;
+    }
+    .hero-btns { display: flex; gap: 16px; align-items: center; opacity: 0; animation: fadeUp .8s .65s forwards; }
+    .btn-primary {
+      background: var(--dark); color: var(--cream); border: none;
+      padding: 16px 38px; border-radius: 50px; cursor: pointer;
+      font-family: 'Quicksand', sans-serif; font-size: 11px; font-weight: 700;
+      letter-spacing: 2.5px; text-transform: uppercase;
+      transition: background .25s, transform .2s, box-shadow .2s;
+      box-shadow: 0 8px 24px rgba(74,64,54,.18);
+    }
+    .btn-primary:hover { background: var(--blush); transform: translateY(-2px); box-shadow: 0 12px 32px rgba(196,154,154,.3); }
+    .btn-secondary {
+      background: transparent; color: var(--dark);
+      border: 1.5px solid rgba(74,64,54,.2); padding: 16px 32px; border-radius: 50px;
+      cursor: pointer; font-family: 'Quicksand', sans-serif;
+      font-size: 11px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
+      transition: border-color .25s, background .25s;
+    }
+    .btn-secondary:hover { border-color: var(--blush); background: rgba(196,154,154,.07); }
+
+    /* HERO RIGHT */
+    .hero-right {
+      display: flex; justify-content: center; align-items: center;
+      position: relative; z-index: 2;
+      opacity: 0; animation: fadeIn 1s .5s forwards;
+    }
+    .mockup-wrap { position: relative; width: 380px; height: 380px; }
+    .mockup-wrap::before {
+      content: ''; position: absolute; inset: -40px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(196,154,154,0.16) 0%, transparent 70%);
+    }
+    .mockup-wrap svg { width: 100%; height: 100%; filter: drop-shadow(0 30px 60px rgba(74,64,54,.13)); }
+    .flame-glow {
+      position: absolute; top: 20%; left: 50%; transform: translateX(-50%);
+      width: 28px; height: 28px;
+      background: radial-gradient(circle, rgba(212,175,55,.65) 0%, transparent 70%);
+      border-radius: 50%; animation: flicker 2s ease-in-out infinite;
+    }
+    @keyframes flicker {
+      0%,100% { opacity: .8; transform: translateX(-50%) scale(1); }
+      50% { opacity: 1; transform: translateX(-50%) scale(1.25); }
+    }
+    .badge {
+      position: absolute; background: var(--cream); border-radius: 14px;
+      padding: 13px 18px; box-shadow: 0 12px 40px rgba(74,64,54,.12);
+      font-size: 12px; font-weight: 600; color: var(--dark);
+      display: flex; align-items: center; gap: 10px; white-space: nowrap;
+    }
+    .badge .icon { font-size: 19px; }
+    .badge-1 { top: 6%; right: -18px; animation: float 4s ease-in-out infinite; }
+    .badge-2 { bottom: 8%; left: -28px; animation: float 4s 1.5s ease-in-out infinite; }
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* DIVIDER */
+    .divider {
+      display: flex; align-items: center; justify-content: center;
+      gap: 18px; padding: 36px 80px; flex-wrap: wrap;
+      border-top: 1px solid rgba(196,154,154,.2);
+      border-bottom: 1px solid rgba(196,154,154,.2);
+    }
+    .divider span {
+      font-size: 10px; font-weight: 700; letter-spacing: 4px;
+      text-transform: uppercase; color: var(--dark); opacity: .5;
+    }
+    .divider-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--blush); flex-shrink:0; }
+
+    /* ABOUT */
+    .about {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; padding: 100px 80px; align-items: center;
+    }
+    .about-card {
+      background: linear-gradient(135deg, var(--lightblush) 0%, #f9f3f3 100%);
+      border-radius: 32px; height: 480px;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden; position: relative;
+    }
+    .about-card svg { width: 68%; filter: drop-shadow(0 20px 40px rgba(74,64,54,.12)); }
+    .about-card::after {
+      content: ''; position: absolute; top: -80px; right: -80px;
+      width: 220px; height: 220px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(212,175,55,.1) 0%, transparent 70%);
+    }
+    .floating-tag {
+      position: absolute; bottom: 28px; left: 28px;
+      background: var(--dark); color: var(--cream);
+      border-radius: 12px; padding: 14px 22px;
+      font-size: 13px; font-weight: 600;
+    }
+    .floating-tag small { display: block; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; opacity: .55; margin-bottom: 3px; }
+    .about-text h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(34px, 4vw, 52px); font-weight: 300; line-height: 1.15; margin-bottom: 22px;
+    }
+    .about-text h2 em { font-style: italic; color: var(--blush); }
+    .about-text p { font-size: 15px; line-height: 1.8; opacity: .62; margin-bottom: 16px; }
+    .about-features { display: flex; flex-direction: column; gap: 14px; margin-top: 32px; }
+    .feature-row { display: flex; align-items: center; gap: 14px; font-size: 13px; font-weight: 600; }
+    .feature-dot {
+      width: 34px; height: 34px; border-radius: 50%; background: var(--lightblush);
+      display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0;
+    }
+
+    /* PRODUCTS */
+    .products { padding: 100px 80px; }
+    .section-header { text-align: center; margin-bottom: 56px; }
+    .section-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 5px; text-transform: uppercase;
+      color: var(--sage); display: inline-block; margin-bottom: 14px;
+    }
+    .section-header h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(34px, 4vw, 50px); font-weight: 300; color: var(--dark);
+    }
+    .section-header h2 em { font-style: italic; color: var(--blush); }
+    .products-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 28px; }
+    .product-card {
+      border-radius: 24px; overflow: hidden;
+      transition: transform .3s, box-shadow .3s; cursor: pointer;
+      box-shadow: 0 4px 20px rgba(74,64,54,.07);
+    }
+    .product-card:hover { transform: translateY(-8px); box-shadow: 0 24px 60px rgba(74,64,54,.14); }
+    .product-img {
+      height: 270px; display: flex; align-items: center; justify-content: center; position: relative;
+    }
+    .product-img.blush { background: linear-gradient(145deg, #f5eaea, #eedede); }
+    .product-img.sage  { background: linear-gradient(145deg, #eef2ee, #e2ebe2); }
+    .product-img.gold  { background: linear-gradient(145deg, #f9f4e8, #f2ead0); }
+    .product-candle { display: flex; flex-direction: column; align-items: center; }
+    .candle-flame {
+      width: 12px; height: 18px;
+      background: radial-gradient(ellipse at bottom, var(--gold) 0%, #ff9900 50%, transparent 100%);
+      border-radius: 50% 50% 20% 20%; margin-bottom: -16px; animation: flicker 1.6s ease-in-out infinite;
+    }
+    .candle-wick { width: 2px; height: 16px; background: var(--dark); margin-bottom: -2px; }
+    .candle-body { width: 72px; height: 104px; border-radius: 8px; }
+    .candle-body.blush { background: linear-gradient(180deg, #e8c4c4, #d4a8a8); }
+    .candle-body.sage  { background: linear-gradient(180deg, #a8bca8, #8ca08c); }
+    .candle-body.ivory { background: linear-gradient(180deg, #fdfbf7, #f0ece0); border: 1px solid #e0d8c8; }
+    .product-info { padding: 22px; background: white; }
+    .product-name { font-size: 16px; font-weight: 700; color: var(--dark); margin-bottom: 5px; }
+    .product-scent { font-size: 11px; color: var(--sage); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; }
+    .product-bottom { display: flex; align-items: center; justify-content: space-between; }
+    .product-price { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; color: var(--dark); }
+    .product-btn {
+      background: var(--dark); color: var(--cream); border: none;
+      padding: 8px 18px; border-radius: 50px;
+      font-family: 'Quicksand', sans-serif; font-size: 10px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: background .2s;
+    }
+    .product-btn:hover { background: var(--blush); }
+
+    /* TESTIMONIALS */
+    .testimonials {
+      background: linear-gradient(135deg, var(--dark) 0%, #2e261f 100%);
+      padding: 100px 80px; position: relative; overflow: hidden;
+    }
+    .testimonials::before {
+      content: ''; position: absolute; top: -100px; right: -100px;
+      width: 400px; height: 400px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(196,154,154,.08) 0%, transparent 70%);
+    }
+    .testimonials .section-label { color: var(--blush); }
+    .testimonials .section-header h2 { color: var(--cream); }
+    .testimonials-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; margin-top: 56px; }
+    .tcard {
+      background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08);
+      border-radius: 20px; padding: 30px; transition: background .3s;
+    }
+    .tcard:hover { background: rgba(255,255,255,.08); }
+    .tcard-stars { color: var(--gold); font-size: 13px; margin-bottom: 14px; letter-spacing: 3px; }
+    .tcard p {
+      font-family: 'Cormorant Garamond', serif; font-size: 17px; font-style: italic;
+      line-height: 1.7; color: rgba(253,251,247,.8); margin-bottom: 22px;
+    }
+    .tcard-author { display: flex; align-items: center; gap: 12px; }
+    .tcard-avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; font-size: 17px;
+    }
+    .tcard-avatar.a1 { background: rgba(196,154,154,.3); }
+    .tcard-avatar.a2 { background: rgba(123,140,122,.3); }
+    .tcard-avatar.a3 { background: rgba(212,175,55,.2); }
+    .tcard-name { font-size: 13px; font-weight: 700; color: var(--cream); }
+    .tcard-loc { font-size: 11px; color: rgba(253,251,247,.4); letter-spacing: 2px; }
+
+    /* CTA */
+    .cta-banner {
+      background: linear-gradient(135deg, var(--lightblush) 0%, #f9f0f0 100%);
+      padding: 100px 80px; display: grid; grid-template-columns: 1fr auto;
+      align-items: center; gap: 60px;
+    }
+    .cta-banner h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(34px, 4vw, 52px); font-weight: 300; line-height: 1.15; color: var(--dark);
+    }
+    .cta-banner h2 em { font-style: italic; color: var(--blush); }
+    .cta-banner p { font-size: 15px; opacity: .6; margin-top: 10px; line-height: 1.7; }
+    .cta-form { display: flex; gap: 12px; flex-shrink: 0; }
+    .cta-form input {
+      border: 1.5px solid rgba(74,64,54,.2); background: white;
+      padding: 15px 22px; border-radius: 50px;
+      font-family: 'Quicksand', sans-serif; font-size: 13px; outline: none; width: 250px;
+      transition: border-color .2s;
+    }
+    .cta-form input:focus { border-color: var(--blush); }
+    .cta-form input::placeholder { opacity: .5; }
+
+    /* FOOTER */
+    footer { background: var(--dark); color: var(--cream); padding: 60px 80px 36px; }
+    .footer-top {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px;
+      padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .footer-brand svg { height: 40px; margin-bottom: 18px; }
+    .footer-brand p { font-size: 13px; opacity: .45; line-height: 1.8; max-width: 240px; }
+    .footer-col h4 { font-size: 10px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; opacity: .45; margin-bottom: 18px; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 11px; }
+    .footer-col ul li a { text-decoration: none; font-size: 13px; color: rgba(253,251,247,.6); transition: color .2s; }
+    .footer-col ul li a:hover { color: var(--blush); }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 30px; font-size: 12px; opacity: .3; }
+
+    /* ANIMATIONS */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s, transform .7s; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(22px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes fadeIn  { from { opacity:0; } to { opacity:1; } }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      nav { padding: 14px 22px; }
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; padding: 110px 28px 60px; text-align: center; }
+      .hero-tag { margin: 0 auto 18px; }
+      .hero-sub { margin: 0 auto 32px; }
+      .hero-btns { justify-content: center; }
+      .hero-right { display: none; }
+      .about, .products, .testimonials, .cta-banner, footer { padding: 60px 28px; }
+      .about, .cta-banner { grid-template-columns: 1fr; }
+      .products-grid, .testimonials-grid { grid-template-columns: 1fr; }
+      .cta-form { flex-direction: column; }
+      .cta-form input { width: 100%; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; }
+      .divider { padding: 28px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 650 140">
+      <g><g transform="translate(30,20)"><g>
+        <circle cx="50" cy="50" r="38" fill="#C49A9A" opacity="0.15"/>
+        <path d="M 30 85 Q 20 60 35 30" fill="none" stroke="#7B8C7A" stroke-width="1.5" stroke-linecap="round"/>
+        <circle cx="28" cy="75" r="3.5" fill="#7B8C7A" opacity="0.9"/><circle cx="34" cy="65" r="3" fill="#7B8C7A" opacity="0.85"/><circle cx="26" cy="55" r="3" fill="#7B8C7A" opacity="0.9"/><circle cx="33" cy="45" r="2.5" fill="#7B8C7A" opacity="0.8"/><circle cx="29" cy="35" r="2" fill="#7B8C7A" opacity="0.9"/>
+        <path d="M 70 85 Q 80 60 65 30" fill="none" stroke="#7B8C7A" stroke-width="1" stroke-linecap="round" opacity="0.7"/>
+        <ellipse cx="73" cy="70" rx="1.5" ry="3.5" fill="#C49A9A" transform="rotate(30 73 70)"/><ellipse cx="68" cy="62" rx="1.5" ry="3" fill="#C49A9A" transform="rotate(-20 68 62)"/><ellipse cx="75" cy="52" rx="1.5" ry="3.5" fill="#C49A9A" transform="rotate(45 75 52)"/><ellipse cx="69" cy="44" rx="1.5" ry="3" fill="#C49A9A" transform="rotate(-15 69 44)"/><ellipse cx="72" cy="34" rx="1" ry="2.5" fill="#C49A9A" transform="rotate(25 72 34)"/>
+        <rect x="40" y="35" width="20" height="50" rx="2" fill="#FDFBF7" stroke="#4A4036" stroke-width="1.5"/>
+        <line x1="50" y1="35" x2="50" y2="30" stroke="#4A4036" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M 50 18 Q 54 25 50 29 Q 46 25 50 18 Z" fill="#D4AF37"/>
+        <path d="M 25 85 Q 50 95 75 85" fill="none" stroke="#7B8C7A" stroke-width="1.5" stroke-linecap="round"/>
+        <g transform="translate(43,85)"><circle cx="0" cy="0" r="7" fill="#C49A9A"/></g>
+        <path d="M 52 83 Q 58 78 62 85 Q 56 88 52 83 Z" fill="#7B8C7A" opacity="0.9"/>
+      </g></g>
+      <g transform="translate(145,65)">
+        <text x="0" y="0" font-size="42" font-weight="500" font-family="'Quicksand',sans-serif" fill="#4A4036" letter-spacing="1">Heavenly Scentz</text>
+        <text x="2" y="32" font-size="12" font-weight="600" font-family="'Quicksand',sans-serif" fill="#7B8C7A" letter-spacing="6" opacity="0.9">SOY CANDLES &amp; THINGZ</text>
+      </g></g>
+    </svg>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#collection">Collection</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="nav-cta">Shop Now</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-tag">✦ Hand-poured with love</div>
+    <h1 class="hero-h1">Light Up Your<br><em>Heavenly</em><br>Moments</h1>
+    <p class="hero-sub">Pure soy candles crafted with the finest botanicals and fragrances. Every flame tells a story of warmth, calm, and pure bliss.</p>
+    <div class="hero-btns">
+      <button class="btn-primary">Explore Collection</button>
+      <button class="btn-secondary">Our Story</button>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="mockup-wrap">
+      <div class="flame-glow"></div>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600">
+        <g>
+          <path d="M 100 600 L 100 250 A 200 200 0 0 1 500 250 L 500 600 Z" fill="#C49A9A" opacity="0.15"/>
+          <circle cx="450" cy="150" r="80" fill="#7B8C7A" opacity="0.05"/>
+          <ellipse cx="300" cy="520" rx="120" ry="20" fill="#000" opacity="0.08"/>
+          <ellipse cx="300" cy="515" rx="90" ry="12" fill="#000" opacity="0.12"/>
+          <rect x="180" y="220" width="240" height="290" rx="20" fill="#FDFBF7"/>
+          <rect x="170" y="190" width="260" height="35" rx="6" fill="#D4AF37"/>
+          <rect x="170" y="190" width="260" height="10" rx="3" fill="#fff" opacity="0.2"/>
+          <rect x="210" y="270" width="180" height="200" rx="8" fill="#FFFFFF"/>
+          <rect x="215" y="275" width="170" height="190" rx="6" fill="none" stroke="#7B8C7A" stroke-width="1" opacity="0.3"/>
+          <g transform="translate(300,310) scale(0.45)"><g transform="translate(-50,0)">
+            <circle cx="50" cy="50" r="38" fill="#C49A9A" opacity="0.15"/>
+            <rect x="40" y="35" width="20" height="50" rx="2" fill="#FDFBF7" stroke="#4A4036" stroke-width="1.5"/>
+            <path d="M 50 18 Q 54 25 50 29 Q 46 25 50 18 Z" fill="#D4AF37"/>
+          </g>
+          <g transform="translate(0,160)">
+            <text x="0" y="0" text-anchor="middle" font-size="36" font-weight="600" font-family="'Quicksand',sans-serif" fill="#4A4036" letter-spacing="4">HEAVENLY</text>
+            <text x="0" y="40" text-anchor="middle" font-size="36" font-weight="600" font-family="'Quicksand',sans-serif" fill="#4A4036" letter-spacing="4">SCENTZ</text>
+            <text x="0" y="105" text-anchor="middle" font-size="11" font-weight="700" font-family="'Quicksand',sans-serif" fill="#4A4036" letter-spacing="5">SOY CANDLES &amp; THINGZ</text>
+          </g></g>
+          <defs><linearGradient id="gr" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#fff" stop-opacity="0.45"/>
+            <stop offset="15%" stop-color="#fff" stop-opacity="0.08"/>
+            <stop offset="50%" stop-color="#fff" stop-opacity="0"/>
+            <stop offset="100%" stop-color="#000" stop-opacity="0.12"/>
+          </linearGradient></defs>
+          <rect x="180" y="220" width="240" height="290" rx="20" fill="url(#gr)" pointer-events="none"/>
+        </g>
+      </svg>
+      <div class="badge badge-1"><span class="icon">🌿</span><div><div style="font-weight:700;font-size:13px">100% Soy Wax</div><div style="font-size:10px;opacity:.55;letter-spacing:1px">Clean Burn</div></div></div>
+      <div class="badge badge-2"><span class="icon">✨</span><div><div style="font-weight:700;font-size:13px">Hand-Poured</div><div style="font-size:10px;opacity:.55;letter-spacing:1px">Small Batches</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- DIVIDER -->
+<div class="divider">
+  <div class="divider-dot"></div><span>100% Natural Soy</span>
+  <div class="divider-dot"></div><span>Hand-Poured</span>
+  <div class="divider-dot"></div><span>Premium Botanicals</span>
+  <div class="divider-dot"></div><span>Long Lasting Scent</span>
+  <div class="divider-dot"></div><span>Cruelty Free</span>
+  <div class="divider-dot"></div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="reveal">
+    <div class="about-card">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600">
+        <g>
+          <path d="M 100 600 L 100 250 A 200 200 0 0 1 500 250 L 500 600 Z" fill="#C49A9A" opacity="0.18"/>
+          <ellipse cx="300" cy="520" rx="120" ry="20" fill="#000" opacity="0.07"/>
+          <rect x="180" y="220" width="240" height="290" rx="20" fill="#FDFBF7"/>
+          <rect x="170" y="190" width="260" height="35" rx="6" fill="#D4AF37"/>
+          <rect x="210" y="270" width="180" height="200" rx="8" fill="#FFFFFF"/>
+          <rect x="215" y="275" width="170" height="190" rx="6" fill="none" stroke="#7B8C7A" stroke-width="1" opacity="0.3"/>
+          <g transform="translate(300,310) scale(0.45)"><g transform="translate(-50,0)">
+            <circle cx="50" cy="50" r="38" fill="#C49A9A" opacity="0.2"/>
+            <rect x="40" y="35" width="20" height="50" rx="2" fill="#FDFBF7" stroke="#4A4036" stroke-width="1.5"/>
+            <path d="M 50 18 Q 54 25 50 29 Q 46 25 50 18 Z" fill="#D4AF37"/>
+          </g>
+          <g transform="translate(0,160)">
+            <text x="0" y="0" text-anchor="middle" font-size="36" font-weight="600" font-family="'Quicksand',sans-serif" fill="#4A4036" letter-spacing="4">HEAVENLY</text>
+            <text x="0" y="40" text-anchor="middle" font-size="36" font-weight="600" font-family="'Quicksand',sans-serif" fill="#4A4036" letter-spacing="4">SCENTZ</text>
+            <text x="0" y="105" text-anchor="middle" font-size="11" font-weight="700" font-family="'Quicksand',sans-serif" fill="#4A4036" letter-spacing="5">SOY CANDLES &amp; THINGZ</text>
+          </g></g>
+        </g>
+      </svg>
+      <div class="floating-tag"><small>Made with Love</small>Heavenly Scentz</div>
+    </div>
+  </div>
+  <div class="about-text reveal">
+    <span class="section-label">✦ Our Story</span>
+    <h2>Born from a Passion for <em>Pure Calm</em></h2>
+    <p>Heavenly Scentz was created for those who believe a simple candle can transform any space into a sanctuary. Every pour is an act of care — made in small batches with real botanicals and the purest soy wax.</p>
+    <p>We don't just make candles. We craft moments: the quiet morning, the cozy evening, the breath you finally get to take.</p>
+    <div class="about-features">
+      <div class="feature-row"><div class="feature-dot">🌿</div> 100% natural soy wax — clean, non-toxic burn</div>
+      <div class="feature-row"><div class="feature-dot">🕯️</div> Hand-poured in small batches for quality</div>
+      <div class="feature-row"><div class="feature-dot">🌸</div> Premium botanical & fragrance blends</div>
+      <div class="feature-row"><div class="feature-dot">♻️</div> Eco-friendly & cruelty-free always</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="products" id="collection">
+  <div class="section-header reveal">
+    <span class="section-label">✦ Signature Collection</span>
+    <h2>Find Your <em>Perfect Scent</em></h2>
+  </div>
+  <div class="products-grid">
+    <div class="product-card reveal">
+      <div class="product-img blush">
+        <div class="product-candle">
+          <div class="candle-flame"></div>
+          <div class="candle-wick"></div>
+          <div class="candle-body blush"></div>
+        </div>
+      </div>
+      <div class="product-info">
+        <div class="product-name">Rose Garden Bliss</div>
+        <div class="product-scent">Rose · Jasmine · Musk</div>
+        <div class="product-bottom"><span class="product-price">$24</span><button class="product-btn">Add to Cart</button></div>
+      </div>
+    </div>
+    <div class="product-card reveal">
+      <div class="product-img sage">
+        <div class="product-candle">
+          <div class="candle-flame"></div>
+          <div class="candle-wick"></div>
+          <div class="candle-body sage"></div>
+        </div>
+      </div>
+      <div class="product-info">
+        <div class="product-name">Sage & Serenity</div>
+        <div class="product-scent">White Sage · Cedar · Earth</div>
+        <div class="product-bottom"><span class="product-price">$26</span><button class="product-btn">Add to Cart</button></div>
+      </div>
+    </div>
+    <div class="product-card reveal">
+      <div class="product-img gold">
+        <div class="product-candle">
+          <div class="candle-flame"></div>
+          <div class="candle-wick"></div>
+          <div class="candle-body ivory"></div>
+        </div>
+      </div>
+      <div class="product-info">
+        <div class="product-name">Golden Vanilla Dream</div>
+        <div class="product-scent">Vanilla · Amber · Sandalwood</div>
+        <div class="product-bottom"><span class="product-price">$28</span><button class="product-btn">Add to Cart</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="reviews">
+  <div class="section-header reveal">
+    <span class="section-label">✦ Customer Love</span>
+    <h2>What Our Community <em>Says</em></h2>
+  </div>
+  <div class="testimonials-grid">
+    <div class="tcard reveal">
+      <div class="tcard-stars">★★★★★</div>
+      <p>"These candles changed my whole evening routine. The scent lingers beautifully and the burn is so clean. Absolutely heavenly — just like the name says."</p>
+      <div class="tcard-author"><div class="tcard-avatar a1">🌸</div><div><div class="tcard-name">Monique R.</div><div class="tcard-loc">Atlanta, GA</div></div></div>
+    </div>
+    <div class="tcard reveal">
+      <div class="tcard-stars">★★★★★</div>
+      <p>"I bought Sage & Serenity as a gift and ordered two more for myself. The packaging alone is stunning — you can tell this brand has real heart."</p>
+      <div class="tcard-author"><div class="tcard-avatar a2">🌿</div><div><div class="tcard-name">Tasha M.</div><div class="tcard-loc">Houston, TX</div></div></div>
+    </div>
+    <div class="tcard reveal">
+      <div class="tcard-stars">★★★★★</div>
+      <p>"My go-to candle brand now. The soy wax burns so evenly and the throw is incredible. Rose Garden Bliss is permanently on my nightstand. Won't go back!"</p>
+      <div class="tcard-author"><div class="tcard-avatar a3">✨</div><div><div class="tcard-name">Janelle B.</div><div class="tcard-loc">Charlotte, NC</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-banner" id="contact">
+  <div class="reveal">
+    <h2>Get <em>10% Off</em> Your First Order</h2>
+    <p>Join the Heavenly Scentz family. Be first to know about new scents, exclusive drops & seasonal collections.</p>
+  </div>
+  <div class="cta-form reveal">
+    <input type="email" placeholder="Your email address…"/>
+    <button class="btn-primary">Subscribe</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 650 140">
+        <g><g transform="translate(30,20)"><g>
+          <circle cx="50" cy="50" r="38" fill="#C49A9A" opacity="0.2"/>
+          <rect x="40" y="35" width="20" height="50" rx="2" fill="#FDFBF7" stroke="#C49A9A" stroke-width="1.5"/>
+          <path d="M 50 18 Q 54 25 50 29 Q 46 25 50 18 Z" fill="#D4AF37"/>
+          <path d="M 25 85 Q 50 95 75 85" fill="none" stroke="#7B8C7A" stroke-width="1.5" stroke-linecap="round"/>
+        </g></g>
+        <g transform="translate(145,65)">
+          <text x="0" y="0" font-size="42" font-weight="500" font-family="'Quicksand',sans-serif" fill="#FDFBF7" letter-spacing="1">Heavenly Scentz</text>
+          <text x="2" y="32" font-size="12" font-weight="600" font-family="'Quicksand',sans-serif" fill="#7B8C7A" letter-spacing="6" opacity="0.9">SOY CANDLES &amp; THINGZ</text>
+        </g></g>
+      </svg>
+      <p>Hand-poured soy candles crafted with love, botanicals, and premium fragrance. Bringing heaven into your home, one flame at a time.</p>
+    </div>
+    <div class="footer-col"><h4>Shop</h4><ul>
+      <li><a href="#">All Candles</a></li><li><a href="#">Gift Sets</a></li>
+      <li><a href="#">Seasonal</a></li><li><a href="#">Thingz</a></li>
+    </ul></div>
+    <div class="footer-col"><h4>Info</h4><ul>
+      <li><a href="#">Our Story</a></li><li><a href="#">Ingredients</a></li>
+      <li><a href="#">Care Guide</a></li><li><a href="#">Wholesale</a></li>
+    </ul></div>
+    <div class="footer-col"><h4>Help</h4><ul>
+      <li><a href="#">FAQ</a></li><li><a href="#">Shipping</a></li>
+      <li><a href="#">Returns</a></li><li><a href="#">Contact Us</a></li>
+    </ul></div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Heavenly Scentz Soy Candles & Thingz. All rights reserved.</span>
+    <span>Made with 🕯️ & Love</span>
+  </div>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
